@@ -59,7 +59,9 @@ public class BeanActivity extends AppCompatActivity {
 
 
         txtBeanName.setText(connectedBean.getDevice().getName());
-        txtBattery.setText("Device Battery at " + Integer.toString( intBatteryLevel) + "%" );
+
+        // set txtBattery when an appropriate battery is configured
+        //txtBattery.setText("Device Battery at " + Integer.toString( intBatteryLevel) + "%" );
 
 
         context = getApplicationContext();

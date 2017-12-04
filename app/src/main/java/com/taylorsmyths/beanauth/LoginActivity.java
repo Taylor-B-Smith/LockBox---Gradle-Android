@@ -39,6 +39,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import com.loopj.android.http.*;
 
 import com.taylorsmyths.beanauth.MainActivity;
@@ -359,7 +361,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mMac = mac;
         }
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
 
         String post(String url) throws IOException {
             RequestBody body = new FormBody.Builder()
@@ -422,11 +428,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 connectedBean.setLed(LedColor.create(0,255,0));
                 // before going to next activity, read bean battery level and store in static var
                 // the callback hangs the bean if done in the bean onCreate for some reason...
-                        connectedBean.readBatteryLevel(new Callback<BatteryLevel>() {
-                                           @Override
-                                           public void onResult(BatteryLevel result) {
-                                               intBatteryLevel = result.getPercentage();
-                                           }});
+
+                // battery level doesn't work with current battery setup.
+                // might work with lithium battery
+//                connectedBean.readBatteryLevel(new Callback<BatteryLevel>() {
+//                                   @Override
+//                                   public void onResult(BatteryLevel result) {
+//                                       intBatteryLevel = result.getPercentage();
+//                                   }});
                 finish();
                 Intent connectedIntent = new Intent(LoginActivity.this, BeanActivity.class);
                 startActivity( connectedIntent );
