@@ -27,6 +27,8 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.punchthrough.bean.sdk.Bean;
+import com.punchthrough.bean.sdk.message.BatteryLevel;
+import com.punchthrough.bean.sdk.message.Callback;
 import com.punchthrough.bean.sdk.message.LedColor;
 
 import java.io.BufferedReader;
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
 
     public Bean connectedBean;
+    public static int intBatteryLevel;
 
     private Context thisActivity;
 
@@ -99,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         thisActivity = this;
         setContentView(R.layout.activity_login);
         setupActionBar();
+
         // Set up the login form.
         txtEmail = (AutoCompleteTextView) findViewById(R.id.txtEmail);
         populateAutoComplete();
@@ -349,8 +353,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
         private final String mMac;
 
-
-
         UserLoginTask(String email, String password, String mac) {
             mEmail = email;
             mPassword = password;
@@ -375,43 +377,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-/*            if (mEmail.equals("master@bean.com") && mPassword.equals("p")) {
-                return true;
-            } else {
-                if (connectedBean.getDevice().getAddress().equals( "D0:39:72:C9:D2:43" )) {
-                    if (mEmail.equals("one@bean.com") && mPassword.equals("p")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else if (connectedBean.getDevice().getAddress().equals( "D0:39:72:C8:E6:A9" )) {
-                    if (mEmail.equals("two@bean.com") && mPassword.equals("p")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else if (connectedBean.getDevice().getAddress().equals( "D0:39:72:C8:ED:9A" )) {
-                    if (mEmail.equals("three@bean.com") && mPassword.equals("p")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else if (connectedBean.getDevice().getAddress().equals( "D0:5F:B8:6B:EB:9C" )) {
-                    if (mEmail.equals("phuc@bean.com") && mPassword.equals("p")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    //WHY WON"T THIS TOAST WORK???? something to do with the context
-                    //Toast.makeText(LoginActivity.this, "This Bean has no security", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            }*/
-
             boolean retval = false;
-
-
 
             try {
                 String strUrl = "https://lockbox1.herokuapp.com/api/v1/users/validate";
@@ -445,29 +411,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             }
             return retval;
-
-
-
-
-            // TODO: attempt authentication against a network service.
-
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
-
-            // TODO: register the new account here.
-            //return true;
         }
 
         @Override
@@ -477,6 +420,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 connectedBean.setLed(LedColor.create(0,255,0));
+                // before going to next activity, read bean battery level and store in static var
+                // the callback hangs the bean if done in the bean onCreate for some reason...
+                        connectedBean.readBatteryLevel(new Callback<BatteryLevel>() {
+                                           @Override
+                                           public void onResult(BatteryLevel result) {
+                                               intBatteryLevel = result.getPercentage();
+                                           }});
                 finish();
                 Intent connectedIntent = new Intent(LoginActivity.this, BeanActivity.class);
                 startActivity( connectedIntent );

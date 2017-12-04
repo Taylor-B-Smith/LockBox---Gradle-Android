@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public static Bean connectedBean;
     private Context thisActivity;
 
-    private static TextView txtSearching;
-    private static Button btnDiscoverBeans;
-    private static ListView lstBeans;
+    private TextView txtSearching;
+    private Button btnDiscoverBeans;
+    private ListView lstBeans;
     private BeanListAdapter beanAdapter;
     private int intRssi;
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 beans.clear();
-                txtSearching.setText("Searching for Beans...");
+                txtSearching.setText("Searching for devices...");
                 DiscoverBeans(view);
             }
         } );
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("RSSI^^^^");
 
                 }
-                txtSearching.setText("Beans found:");
+                txtSearching.setText("Devices found:");
             }
         };
 
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 LedColor blue = LedColor.create(0,0,255);
 
                 bean.setLed(blue);
-                System.out.println("Connected to Bean!");
-                Toast.makeText(thisActivity, "Connected to Bean!", Toast.LENGTH_SHORT).show();
+                System.out.println("Connected to Device!");
+                //Toast.makeText(thisActivity, "Connected to Device!", Toast.LENGTH_SHORT).show();
                 bean.readDeviceInfo(new Callback<DeviceInfo>() {
                     @Override
                     public void onResult(DeviceInfo deviceInfo) {
@@ -148,25 +148,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-//                try {
-//                    //bean.setLed(blue);
-//                    //bean.wait(2000);
-//                    //bean.setLed(off);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-
                 Intent loginIntent = new Intent( MainActivity.this, LoginActivity.class);
                 startActivity( loginIntent );
             }
 
             // In practice you must implement the other Listener methods
 
-
             @Override
             public void onDisconnected() {
                 System.out.println("Bean Disconnected!!!");
-                Toast.makeText(thisActivity, "Bean Disconnected", Toast.LENGTH_SHORT).show();
+                bean.setLed(LedColor.create(0,0,0));
+                //Toast.makeText(thisActivity, "Bean Disconnected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -203,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //commented out because we don't currently need the options menu
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -212,12 +206,14 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //Also commented because we don't currently need the options menu
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

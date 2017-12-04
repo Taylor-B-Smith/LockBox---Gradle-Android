@@ -50,4 +50,14 @@
             android:id="@+id/btnLedOpen"
             android:enabled="true"
             android:layout_above="@+id/btnLedOff" android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/txtBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtBeanName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:textAlignment="center" />
+
 </RelativeLayout>

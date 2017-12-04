@@ -19,12 +19,15 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
             android:id="@+id/txtSearching" android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Look For Beans"
-            android:id="@+id/btnDiscoverBeans" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:enabled="true"/>
+        android:id="@+id/btnDiscoverBeans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:enabled="true"
+        android:text="Look for Devices" />
     <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
