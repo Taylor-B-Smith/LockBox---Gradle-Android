@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BeanAuth.iml" filepath="$PROJECT_DIR$/BeanAuth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" />
+      <module fileurl="file://D:\AndroidProjects\LockBox---Gradle-Android\BeanAuth.iml" filepath="D:\AndroidProjects\LockBox---Gradle-Android\BeanAuth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LockBox---Gradle-Android.iml" filepath="$PROJECT_DIR$/LockBox---Gradle-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\AndroidProjects\LockBox---Gradle-Android\.idea\modules\app\app.iml" filepath="D:\AndroidProjects\LockBox---Gradle-Android\.idea\modules\app\app.iml" />
     </modules>
   </component>
 </project>

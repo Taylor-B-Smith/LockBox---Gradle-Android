@@ -21,7 +21,7 @@ public class BeanListAdapter extends ArrayAdapter<Bean> {
     private int layoutResourceId;
     private Context context;
 
-    public BeanListAdapter(Context context, int layoutResourceId, List<Bean> beans) {
+    private BeanListAdapter(Context context, int layoutResourceId, List<Bean> beans) {
         super(context, layoutResourceId, beans);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -29,8 +29,7 @@ public class BeanListAdapter extends ArrayAdapter<Bean> {
     }
 
     @Override
-    public View  getView(int position, View convertView, @NonNull ViewGroup parent ) {
-        View row = convertView;
+    public View getView(int position, View row, @NonNull ViewGroup parent ) {
         BeanHolder holder = null;
 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -45,12 +44,10 @@ public class BeanListAdapter extends ArrayAdapter<Bean> {
         holder.connectButton.setText(holder.bean.getDevice().getName());
         holder.macAddress.setText(holder.bean.getDevice().getAddress());
 
-
         row.setTag(holder);
 
         return row;
     }
-
 
     public static class BeanHolder {
         Bean bean;

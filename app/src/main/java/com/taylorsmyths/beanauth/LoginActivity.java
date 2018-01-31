@@ -247,13 +247,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    //TODO:: define email and password validation requirements, if desired.
     private boolean isEmailValid(String email) {
         return !email.isEmpty();
     }
 
-    private boolean isPasswordValid(String password) {  //SHOULD ACTUALLY BE VALIDATION INSTEAD OF AUTH
-        return !password.isEmpty();
-    }
+    private boolean isPasswordValid(String password) { return !password.isEmpty(); }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -346,8 +345,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Represents an asynchronous login/registration task used to authenticate the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -388,23 +386,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 String strUrl = "https://lockbox1.herokuapp.com/api/v1/users/validate";
                 URL url = new URL(strUrl);
-//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                connection.setRequestMethod("POST");
-//                connection.setDoOutput(true);
-//                connection.setRequestProperty("username", mEmail);
-//                connection.setRequestProperty("password", mPassword);
-//                connection.setRequestProperty("mac", mMac);
-//                connection.setConnectTimeout(10000);
-//                connection.setReadTimeout(10000);
-//                connection.connect();
-//                BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//                String response = "", line;
-//                while ((line = rd.readLine()) != null) {
-//                    response += line + "\n";
-//                }
-//                connection.disconnect();
-
-                //JSONObject j = new JSONObject(json)
 
                 String response = post(strUrl);
 
@@ -440,6 +421,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent connectedIntent = new Intent(LoginActivity.this, BeanActivity.class);
                 startActivity( connectedIntent );
             } else {
+                // Display red led on bean, display validation error message, and set focus to the password TextEdit.
                 connectedBean.setLed(LedColor.create(255,0,0));
                 edtPassword.setError("username/password is incorrect");
                 edtPassword.requestFocus();

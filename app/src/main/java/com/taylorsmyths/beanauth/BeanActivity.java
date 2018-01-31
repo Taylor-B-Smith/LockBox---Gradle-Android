@@ -56,11 +56,9 @@ public class BeanActivity extends AppCompatActivity {
         btnLedOff = findViewById(R.id.btnLedOff);
         btnDisconnect = findViewById(R.id.btnDisconnect);
 
-
-
         txtBeanName.setText(connectedBean.getDevice().getName());
 
-        // set txtBattery when an appropriate battery is configured
+        // TODO:: set txtBattery when an appropriate battery is configured
         //txtBattery.setText("Device Battery at " + Integer.toString( intBatteryLevel) + "%" );
 
 
@@ -101,12 +99,15 @@ public class BeanActivity extends AppCompatActivity {
             }
         });
 
+        // Set listener for "Unlock" button.
         btnLedOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isConnected(connectedBean)) {
                     connectedBean.setLed(LedColor.create(0,0,17));
+                    // Set scratch value for Arduino script to test against.
                     connectedBean.setScratchData(ScratchBank.BANK_1, "pulse");
+                    // Disable button while the device is unlocked.
                     btnLedOpen.setEnabled(false);
                     btnLedOpen.postDelayed(new Runnable() {
                         @Override
@@ -115,7 +116,6 @@ public class BeanActivity extends AppCompatActivity {
                         }
                     }, 5000);
                 }
-
             }
         });
 
@@ -126,13 +126,10 @@ public class BeanActivity extends AppCompatActivity {
                 disconnect(connectedBean);
             }
         });
-
-
-        //connectedBean.readRemoteRssi(); //this was for yonghao
-
     }
 
-    private void disconnect(Bean bean) {        //disconnect and back out to main activity
+    // Disconnect and back out to main activity.
+    private void disconnect(Bean bean) {
         connectedBean.setLed(LedColor.create( 0, 0, 0 ));
         toast.makeText(context, toastText, Toast.LENGTH_LONG);
         bean.disconnect();
@@ -141,7 +138,8 @@ public class BeanActivity extends AppCompatActivity {
         startActivity( disconnectIntent );
     }
 
-    private boolean isConnected(Bean bean) {    //check if bean is still connected
+    // Check if bean is still connected
+    private boolean isConnected(Bean bean) {
         if(bean.isConnected()) {
             return true;
         } else {
